@@ -39,14 +39,23 @@ const studentValidationSchema = Joi.object({
 });
 
 // RESTful API Routes
-app.post('/api/students/register', async (req, res) => {
+// Health check endpoint
+app.get('/api/status', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+// Student registration endpoint
+app.post('/api/students', async (req, res) => {
   try {
     const { error } = studentValidationSchema.validate(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
 
     const student = new Student(req.body);
     await student.save();
-    res.status(201).json(student);
+    res.status(201).json({
+      message: 'Student registered successfully',
+      student: student
+    });
   } catch (error) {
     res.status(500).json({ error: 'Registration failed' });
   }
