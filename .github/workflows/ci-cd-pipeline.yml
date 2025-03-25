@@ -64,21 +64,4 @@ jobs:
           ${{ secrets.DOCKER_USERNAME }}/student-validation-microservice:latest
           ${{ secrets.DOCKER_USERNAME }}/student-validation-microservice:${{ github.sha }}
 
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Install kubectl
-      uses: azure/setup-kubectl@v1
-
-    - name: Deploy to Kubernetes
-      run: |
-        echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
-        export KUBECONFIG=kubeconfig.yaml
-        kubectl apply -f k8s/
-      env:
-        KUBECONFIG: kubeconfig.yaml
+  
