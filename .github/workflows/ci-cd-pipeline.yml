@@ -64,11 +64,4 @@ jobs:
           ${{ secrets.DOCKER_USERNAME }}/student-validation-microservice:latest
           ${{ secrets.DOCKER_USERNAME }}/student-validation-microservice:${{ github.sha }}
 
-<<<<<<< HEAD
   
-=======
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-   
->>>>>>> a476d6536aea6603586ffe52c2b072535930f9b3
