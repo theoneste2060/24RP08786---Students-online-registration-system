@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validation-microservice-deployment
+  labels:
+    app: student-validation-microservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: student-validation-microservice
+  template:
+    metadata:
+      labels:
+        app: student-validation-microservice
+    spec:
+      containers:
+      - name: validation-microservice
+        image: student-validation-microservice:latest
+        ports:
+        - containerPort: 3001
+        resources:
+          limits:
+            cpu: "300m"
+            memory: "256Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: validation-microservice-service
+spec:
+  selector:
+    app: student-validation-microservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3001
+  type: ClusterIP
