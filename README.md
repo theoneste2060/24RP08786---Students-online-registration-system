@@ -73,6 +73,3 @@ The application can be deployed using Kubernetes:
 kubectl apply -f k8s/
 ```
 
-## License
-
-MIT
